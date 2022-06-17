@@ -1,29 +1,30 @@
 
 #include "cub3d.h"
 
-void ft_check_map(fd)
+char	**map_filling(int fd)
 {
-	int i;
-	int j;
-	char **map;
-	int fd;
-	char *buf;
+	int c;
+	char	*buf;
+	char	*s;
+	char	**map;
+
 	buf = (char *)malloc(sizeof(char) * (2));
 	if (!buf)
 		return (NULL);
-	while (i > 0)
+	c = 1;
+	while (c > 0)
 	{
-		i = read(fd, buf, 1);
-		if (i == -1)
+		c = read(fd, buf, 1);
+		if (c == -1)
 		{
 			free(buf);
 			return (NULL);
 		}
-		buf[i] = '\0';
-		m = ft_strjoin(m, buf);
+		buf[c] = '\0';
+		s = ft_strjoin(s, buf);
 	}
 	free(buf);
 	map = ft_split(s, '\n');
 	free(s);
-	
+	return (map);
 }

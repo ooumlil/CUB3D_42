@@ -4,7 +4,8 @@ CFLAGS = -Wall -Wextra -Werror -Imlx
 
 SRC = main.c \
 	check_elements.c \
-	check_extension.c
+	check_extension.c \
+	utils.c \
 
 
 OBJ = $(SRC:.c=.o)
