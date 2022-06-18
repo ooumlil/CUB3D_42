@@ -6,12 +6,42 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/18 20:44:31 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/18 21:50:00 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int ft_check_new_line(char **map,char *s)
+{	
+	int i;
+	int c;
+	
+	i  = 0;
+	while(s[i])
+	{
+		if(s[i] == '\n'&& s[i + 1] == '1')
+			break ;
+		i++;
+	}
+	int j = i;
+	c = 0;
+	while (s[j])
+	{
+		if(s[j] == '\n')
+			c++;
+		j++;
+	}
+	j = 0;
+	while(map[j])
+		j++;
+	if(j - 6 != c)
+	{
+		printf("invalid map\n");
+		return (1);
+	}
+	return (0);
+}
 int	check_colors(char **six_lines)
 {
 	int		i;
@@ -147,8 +177,14 @@ char	**map_filling(int fd)
 		buf[c] = '\0';
 		s = ft_strjoin(s, buf);
 	}
-	free(buf);
+	free(buf);	
 	map = ft_split(s, '\n');
+	if(ft_check_new_line(map,s))
+	{
+		free(s);
+		////free map
+		return (NULL);
+	}
 	free(s);
 	return (map);
 }

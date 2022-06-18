@@ -24,8 +24,10 @@ int	main(int ac , char **av)
 		return (close(fd), 1);
 	}
 	map = map_filling(fd);
-	while(map[i])
-		printf("%s\n",map[i++]);
+	if(!map)
+		return (1);
+	// while(map[i])
+	// 	printf("%s\n",map[i++]);
 	j = -1;
 	six_lines = malloc(sizeof(char *) * 6 + 1);
 	while(map[j++] && j < 6)
@@ -64,4 +66,10 @@ int	main(int ac , char **av)
 		printf("missing colors\n");
 		return (1);
 	}
+	i = 6;
+	//while(map[i])
+	//{
+		printf("%c\n",map[i][3]);
+	//}
+	// ft_map_check(map);
 }
