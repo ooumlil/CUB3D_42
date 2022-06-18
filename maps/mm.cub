@@ -1,14 +1,15 @@
-NO ../assets/the_north_texture.xpm
 
-SO ../assets/the_south_texture.xpm
+NO     ./assets/bluestone.xpm
 
-WE ../assets/the_west_texture.xpm
+SO       ./assets/eagle.xpm
 
-EA ../assets/the_east_texture.xpm
+WE ./assets/floor_1.xpm
 
-F 220,100,0
+EA ./assets/purplestone.xpm
 
-C 225,30,0
+F        226 , 100,33
+
+C        255 , 30, 0
 
 
 

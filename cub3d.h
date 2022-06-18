@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/17 16:13:12 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/06/18 20:34:44 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,10 @@ char	*ft_strrchr(const char *s, int c);
 size_t	ft_strlen(const	char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
+int	ft_isalpha(int c);
+int	check_colors(char **six_lines);
+int	check_first_sixlines(char *s, int *j);
+int	check_textur(char **six_lines);
+int	check_duble_element(char **six_lines);
+
 #endif
