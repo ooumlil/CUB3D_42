@@ -60,17 +60,26 @@ int	main(int ac , char **av)
 		return (1);
 	}
 	i = 6;
+	int k;
+	k = 0;
+	while(map[k])
+		k++;
 	while(map[i])
 	{
 		j = 0;
 		while(map[i][j])
 		{
 			if(map[6][j] != '1' && map[6][j] != ' ' && i == 6)
-			{
+			{ 
 				printf("error int first line in map\n");
 				return(0);
 			}
-			if(map[i][j] == '0' && i != 6)
+			if(map[k - 1][j] != '1' && map[k - 1][j] != ' ' && i == k - 1)
+			{ 
+				printf("error int last line in map\n");
+				return(0);
+			}
+			if(map[i][j] == '0' && i != 6 && i != k - 1)
 			{
 				if(map[i][j + 1] != '1' && map[i][j + 1] != '0' && map[i][j + 1] != 'E' && map[i][j + 1] != 'S' && map[i][j + 1] != 'W')
 					printf("invalid asahbii 1\n");
