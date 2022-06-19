@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/18 20:34:44 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/19 22:01:25 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
 int	ft_isalpha(int c);
 int	check_colors(char **six_lines);
-int	check_first_sixlines(char *s, int *j);
+int	check_first_sixlines(char *s);
 int	check_textur(char **six_lines);
 int	check_duble_element(char **six_lines);
 

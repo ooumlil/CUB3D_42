@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/19 20:25:30 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/19 22:45:23 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,45 +63,27 @@ int	check_colors(char **six_lines)
 			while (tmp[++j])
 				if (atoi(tmp[j]) > 255 || atoi(tmp[j]) < 0)
 					return (1);
-			if (j < 3)
+			if (j != 3)
 				return (1);
 		}
 	}
 	return (0);
 }
 
-int	check_first_sixlines(char *s, int *j)
+int	check_first_sixlines(char *s)
 {
-	if (s[0] == 'N' && s[1] == 'O' && !ft_isalpha(s[2]))
-	{
-		(*j)++;
+	if (s[0] == 'N' && s[1] == 'O' && s[2] == ' ')
 		return (0);
-	}
-	else if (s[0] == 'S' && s[1] == 'O' && !ft_isalpha(s[2]))
-	{
-		(*j)++;
+	else if (s[0] == 'S' && s[1] == 'O' && s[2] == ' ')
 		return (0);
-	}
-	else if (s[0] == 'W' && s[1] == 'E' && !ft_isalpha(s[2]))
-	{
-		(*j)++;
+	else if (s[0] == 'W' && s[1] == 'E' && s[2] == ' ')
 		return (0);
-	}
-	else if (s[0] == 'E' && s[1] == 'A' && !ft_isalpha(s[2]))
-	{
-		(*j)++;
+	else if (s[0] == 'E' && s[1] == 'A' && s[2] == ' ')
 		return (0);
-	}
-	else if (s[0] == 'F' && !ft_isalpha(s[1]))
-	{
-		(*j)++;
+	else if (s[0] == 'F' && s[1] == ' ')
 		return (0);
-	}
-	else if (s[0] == 'C' && !ft_isalpha(s[1]))
-	{
-		(*j)++;
+	else if (s[0] == 'C' && s[1] == ' ')
 		return (0);
-	}
 	else
 		return (1);
 }
