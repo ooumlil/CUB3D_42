@@ -67,9 +67,90 @@ int	main(int ac , char **av)
 		return (1);
 	}
 	i = 6;
-	//while(map[i])
-	//{
-		printf("%c\n",map[i][3]);
-	//}
+
+	while(map[i])
+	{
+		printf("%s\n",map[i++]);
+	}
+	i = 6;
+	// while(map[i])
+	// {
+	// 	j = 0;
+	// 	while(map[i][j])
+	// 	{
+	// 		// if(map[i][j] == ' ' && map[i][j+1])
+	// 		// 	while(map[i][j] == ' ')
+	// 		// 		j++;
+	// 		// if(map[i][j - 1] == ' ')
+	// 		// 	if(map[i][j] != '1' || (map[i - 1][j] != '1' && i != 6 && map[i - 1][j] != '\0') || (map[i + 1][j] != '1' && map[i + 1]))
+	// 		// 	{
+	// 		// 		printf("P00\n");
+	// 		// 		printf("%s\n",map[i]);
+	// 		// 		return (0);
+	// 		// 	}
+	// 		if(map[i][j] == ' ')
+	// 		{
+	// 			while(map[i][j] == ' ')
+	// 			{
+	// 				if((map[i - 1][j] != '1' && i != 6) || map[i + 1][j] != '1' || map[i][j + 1] != '1')
+	// 					printf("fy\n");
+	// 				j++;
+	// 			}
+	// 			else
+	// 			{
+	// 				while(map[i][j] == ' ')
+	// 				{
+	// 					if((map[i - 1][j] != '1' && i != 6
+	// 						&& map[i - 1][j] != '\0')
+	// 						|| (map[i + 1][j] != '1' && map[i + 1][j] != '\0')|| ( map[i][j + 1] != '1'&& map[i][j +1] != '\0' )|| (map[i][j - 1] != '1' && map[i][j - 1] != '\0'))
+	// 						printf("fb\n");
+	// 					j++;
+	// 				}
+	// 			}
+	// 		}
+	// 		j++;
+	// 	}
+	// 	i++;
+	// }
 	// ft_map_check(map);
+	////////ali check map/////////
+	while(map[i])
+	{
+		j = 0;
+		while(map[i][j])
+		{
+			if (map[i][j] == ' ')
+			{
+				if (map[i][j - 1] != '1' && j != 0)
+					printf("invalide map  1\n");
+				while (map[i][j + 1] == ' ')
+					j++;
+				if (map[i][j + 1] != '1' && map[i][j+ 1])
+					printf("invalide map  2\n");
+			}
+			j++;
+		}
+		i++;
+	}
+	j = 0;
+	i = 6;
+	while(map[i])
+	{
+		i = 6;
+		while(map[i][j])
+		{
+			if (map[i][j] == ' ')
+			{
+				printf("ooook\n");
+				if (map[i -1][j] != '1' && i != 6)
+					printf("invalide map  3\n");
+				while (map[i + 1][j] == ' ')
+					i++;
+				if (map[i + 1][j] != '1' && map[i + 1])
+					printf("invalide map  4\n");
+			}
+			i++;
+		}
+		j++;
+	}
 }

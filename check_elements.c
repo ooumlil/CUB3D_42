@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/18 21:50:00 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/19 20:25:30 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,12 +179,12 @@ char	**map_filling(int fd)
 	}
 	free(buf);	
 	map = ft_split(s, '\n');
-	if(ft_check_new_line(map,s))
-	{
-		free(s);
-		////free map
-		return (NULL);
-	}
+	// if(ft_check_new_line(map,s))
+	// {
+	// 	free(s);
+	// 	////free map
+	// 	return (NULL);
+	// }
 	free(s);
 	return (map);
 }
