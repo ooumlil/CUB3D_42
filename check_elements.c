@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/20 15:33:15 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/20 21:59:04 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@ int	check_linebyline(char *s, int i, char *map)
 	int		k;
 	char	*d;
 
-	d = malloc(1000);
+	d = malloc(10000);
 	k = 0;
 	while (s[i] != '\n')
 	{
-		d[k++] = s[i];
-		i++;
+		d[k++] = s[i++];
 	}
 	d[k] = '\0';
-	if (!strcmp(d, map))
+	if (!strncmp(d, map,ft_strlen(d)))
 	{
 		free(d);
 		return(1);
@@ -45,10 +44,12 @@ int ft_check_new_line_1(char *map,char *s)
 		if (s[i] == '\n' )
 		{
 			i++;
-			if(s[i] == '\n')
+			while(s[i] == '\n')
 				i++;
 			if(check_linebyline(s,i,map))
+			{
 				break;
+			}
 		}
 	}
 	return (i);
@@ -57,7 +58,6 @@ int ft_check_new_line(char **map,char *s)
 {	
 	int i;
 	int c;
-	
 	i = ft_check_new_line_1(map[6], s);
 	c = 0;
 	while (s[i])
@@ -70,7 +70,7 @@ int ft_check_new_line(char **map,char *s)
 	while(map[i])
 		i++;
 	if (i - 6 - 1 != c)
-		return (printf("invalid map\n"));
+		return (printf("Invalid Map : New Line.\n"));
 	return (0);
 }
 int	check_colors(char **six_lines)
@@ -85,7 +85,7 @@ int	check_colors(char **six_lines)
 	{
 		if (ft_strchr(six_lines[i], ','))
 		{
-			if (six_lines[i][ft_strlen(six_lines[i]) - 1] == ' ')
+			if (six_lines[i][ft_strlen(six_lines[i]) - 1] == ' ' || six_lines[i][ft_strlen(six_lines[i]) - 1] == 9)
 				return (1);
 			s = ft_strchr(six_lines[i], ' ');
 			++s;
@@ -167,7 +167,18 @@ int	check_duble_element(char **six_lines)
 	}
 	return (0);
 }
-
+char	**ft_free(char *s, char **map)
+{
+	int i;
+	
+	i = 0;
+	if (s)
+		free(s);
+	while (map[i])
+		free(map[i++]);
+	free(map);
+	return(NULL);
+}
 char	**map_filling(int fd)
 {
 	int		c;
@@ -192,12 +203,8 @@ char	**map_filling(int fd)
 	}
 	free(buf);	
 	map = ft_split(s, '\n');
-	if(ft_check_new_line(map,s))
-	{
-		free(s);
-		////free map
-		return (NULL);
-	}
+	if (ft_check_new_line(map, s))
+		return(ft_free(s, map));
 	free(s);
 	return (map);
 }
