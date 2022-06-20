@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/19 22:01:25 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/20 11:50:55 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ int	check_colors(char **six_lines);
 int	check_first_sixlines(char *s);
 int	check_textur(char **six_lines);
 int	check_duble_element(char **six_lines);
-
+int map_parsing(char **six_lines,char **map);
 #endif

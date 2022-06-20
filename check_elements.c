@@ -6,40 +6,71 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/19 22:45:23 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:33:15 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+
+int	check_linebyline(char *s, int i, char *map)
+{
+	int		k;
+	char	*d;
+
+	d = malloc(1000);
+	k = 0;
+	while (s[i] != '\n')
+	{
+		d[k++] = s[i];
+		i++;
+	}
+	d[k] = '\0';
+	if (!strcmp(d, map))
+	{
+		free(d);
+		return(1);
+	}
+	free(d);
+	return (0);
+}
+
+int ft_check_new_line_1(char *map,char *s)
+{
+	int i;
+	
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == '\n' )
+		{
+			i++;
+			if(s[i] == '\n')
+				i++;
+			if(check_linebyline(s,i,map))
+				break;
+		}
+	}
+	return (i);
+}
 int ft_check_new_line(char **map,char *s)
 {	
 	int i;
 	int c;
 	
-	i  = 0;
-	while(s[i])
+	i = ft_check_new_line_1(map[6], s);
+	c = 0;
+	while (s[i])
 	{
-		if(s[i] == '\n'&& s[i + 1] == '1')
-			break ;
+		if(s[i] == '\n')
+			c++;
 		i++;
 	}
-	int j = i;
-	c = 0;
-	while (s[j])
-	{
-		if(s[j] == '\n')
-			c++;
-		j++;
-	}
-	j = 0;
-	while(map[j])
-		j++;
-	if(j - 6 != c)
-	{
-		printf("invalid map\n");
-		return (1);
-	}
+	i = 0;
+	while(map[i])
+		i++;
+	if (i - 6 - 1 != c)
+		return (printf("invalid map\n"));
 	return (0);
 }
 int	check_colors(char **six_lines)
@@ -161,12 +192,12 @@ char	**map_filling(int fd)
 	}
 	free(buf);	
 	map = ft_split(s, '\n');
-	// if(ft_check_new_line(map,s))
-	// {
-	// 	free(s);
-	// 	////free map
-	// 	return (NULL);
-	// }
+	if(ft_check_new_line(map,s))
+	{
+		free(s);
+		////free map
+		return (NULL);
+	}
 	free(s);
 	return (map);
 }

@@ -6,6 +6,7 @@ SRC = main.c \
 	check_elements.c \
 	check_extension.c \
 	utils.c \
+	map_parsing.c \
 
 
 OBJ = $(SRC:.c=.o)
