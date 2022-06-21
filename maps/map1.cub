@@ -7,9 +7,9 @@ WE ./assets/floor_1.xpm
 
 EA ./assets/purplestone.xpm
 
-F        226 ,  100, 33
+F       22,100,33
 
-C        255 , 30, 0
+C       255,30,0
 
                        111111111111
                         10000000001

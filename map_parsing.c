@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 21:16:54 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/20 21:10:06 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/21 17:19:59 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int map_parsing(char **six_lines,char **map)
 		return (printf("Invalid Elements\n"));
 	if (check_textur(six_lines))
 		return (printf("Failed to load texture!\n"));
-	if (check_colors(six_lines))////////////////////////////////////","problem in the floor and ceiling
+	else if (check_colors(six_lines))////////////////////////////////////","problem in the floor and ceiling
 		return (printf("Invalid Colors\n"));
 	i = 6;
 	while(map[i])

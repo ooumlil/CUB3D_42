@@ -15,8 +15,11 @@ int map_final_check(char **map)
 		return (1);
 	j = -1;
 	six_lines = malloc(sizeof(char *) * 6 + 1);
-	while (map[j++] && j < 6)
+	while (map[++j] && j < 6)
+	{
+		six_lines[j] = malloc(sizeof(char) * ft_strlen(map[j]));
 		six_lines[j] = strdup(map[j]);
+	}
 	six_lines[j] = NULL;
 	if (map_parsing(six_lines, map))
 		return(1);

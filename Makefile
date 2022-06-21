@@ -17,7 +17,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ) cub3d.h
-	@$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	@$(CC) $(OBJ) -o $(NAME) #-lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean :
 	@rm -rf $(OBJ)

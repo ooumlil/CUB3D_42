@@ -6,13 +6,38 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 20:33:14 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/20 21:59:04 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/21 17:50:30 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int	check_space_colors(char *s, int *k)
+{
+	int	i;
 
+	i = 0;
+	*k = 0;
+	while(s[i])
+	{
+		if(s[i] == ' ')
+		{
+			i++;
+			while(s[i] == ' ')
+				i++;
+			while(ft_isdigit(s[i]) || s[i] == ',')
+			{
+				if(s[i] == ',')
+					(*k)++;
+				i++;
+			}
+			if(s[i] == ' ' && s[i])
+				return(1);
+		}
+		return (0);
+	}
+	return (0);
+}
 int	check_linebyline(char *s, int i, char *map)
 {
 	int		k;
@@ -76,19 +101,22 @@ int ft_check_new_line(char **map,char *s)
 int	check_colors(char **six_lines)
 {
 	int		i;
+	int		k;
 	int		j;
 	char	**tmp;
 	char	*s;
 
-	i = -1;
-	while (six_lines[++i])
+	i = 0;
+	while (six_lines[i])
 	{
 		if (ft_strchr(six_lines[i], ','))
 		{
-			if (six_lines[i][ft_strlen(six_lines[i]) - 1] == ' ' || six_lines[i][ft_strlen(six_lines[i]) - 1] == 9)
-				return (1);
 			s = ft_strchr(six_lines[i], ' ');
 			++s;
+			if (check_space_colors(s,&k))
+				return (1);
+			if(k != 2)
+				return (1);
 			tmp = ft_split(s, ',');
 			j = -1;
 			while (tmp[++j])
@@ -97,6 +125,7 @@ int	check_colors(char **six_lines)
 			if (j != 3)
 				return (1);
 		}
+		i++;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/20 11:50:55 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:06:53 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <mlx.h>
+// # include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
@@ -34,6 +34,7 @@ size_t	ft_strlen(const	char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
 int	ft_isalpha(int c);
+int	ft_isdigit(int c);
 int	check_colors(char **six_lines);
 int	check_first_sixlines(char *s);
 int	check_textur(char **six_lines);
