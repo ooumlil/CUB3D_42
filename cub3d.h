@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:06:53 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/21 22:31:25 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-// # include "mlx.h"
+# include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
@@ -33,11 +33,14 @@ char	*ft_strrchr(const char *s, int c);
 size_t	ft_strlen(const	char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
-int	ft_isalpha(int c);
-int	ft_isdigit(int c);
-int	check_colors(char **six_lines);
-int	check_first_sixlines(char *s);
-int	check_textur(char **six_lines);
-int	check_duble_element(char **six_lines);
-int map_parsing(char **six_lines,char **map);
+int		map_final_check(char **map);
+int		ft_isalpha(int c);
+int		ft_isdigit(int c);
+int		check_colors(char **six_lines);
+int		check_first_sixlines(char *s);
+int		check_textur(char **six_lines);
+int		check_duble_element(char **six_lines);
+int		ft_check_new_line(char **map, char *s);
+int		map_parsing(char **six_lines, char **map);
+
 #endif

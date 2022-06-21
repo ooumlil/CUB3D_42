@@ -2,11 +2,15 @@ NAME = cub3d
 
 CFLAGS = -Wall -Wextra -Werror -Imlx
 
-SRC = main.c \
-	check_elements.c \
-	check_extension.c \
-	utils.c \
-	map_parsing.c \
+SRC = parsing/utils.c \
+	parsing/utils2.c \
+	parsing/ft_split.c \
+	parsing/check_extension.c \
+	parsing/map_filling.c \
+	parsing/map_parsing.c \
+	parsing/map_checking.c \
+	parsing/colors_and_new_line.c \
+	main.c
 
 
 OBJ = $(SRC:.c=.o)
