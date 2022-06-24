@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors_and_new_line.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 22:25:06 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/06/21 22:33:16 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/06/24 16:10:49 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,18 @@ int	check_space_colors(char *s, int *k)
 	int	i;
 
 	i = 0;
-	*k = 0;
-	while (s[i])
+	while (s[i] == ' ')
+		i++;
+	while (s[i] != ' ' && s[i])
 	{
-		if (s[i] == ' ')
-		{
-			i++;
-			while (s[i] == ' ')
-				i++;
-			while (ft_isdigit(s[i]) || s[i] == ',')
-			{
-				if (s[i] == ',')
-					(*k)++;
-				i++;
-			}
-			if (s[i] == ' ' && s[i])
-				return (1);
-		}
-		return (0);
+		if (s[i] != ',' && !ft_isdigit(s[i]))
+			return (1);
+		if (s[i] == ',')
+			(*k)++;
+		i++;
 	}
+	if (s[i] == ' ')
+		return (1);
 	return (0);
 }
 
@@ -47,9 +40,7 @@ int	check_linebyline(char *s, int i, char *map)
 	d = malloc(10000);
 	k = 0;
 	while (s[i] != '\n')
-	{
 		d[k++] = s[i++];
-	}
 	d[k] = '\0';
 	if (!strncmp(d, map, ft_strlen(d)))
 		return (free(d), 1);
@@ -96,15 +87,11 @@ int	ft_check_new_line(char **map, char *s)
 	return (0);
 }
 
-int	check_colors(char **six_lines)
+int	check_colors(char **six_lines, int i, int k, int j)
 {
-	int		i;
-	int		k;
-	int		j;
 	char	**tmp;
 	char	*s;
 
-	i = 0;
 	while (six_lines[i])
 	{
 		if (ft_strchr(six_lines[i], ','))
@@ -115,6 +102,7 @@ int	check_colors(char **six_lines)
 				return (1);
 			if (k != 2)
 				return (1);
+			k = 0;
 			tmp = ft_split(s, ',');
 			j = -1;
 			while (tmp[++j])

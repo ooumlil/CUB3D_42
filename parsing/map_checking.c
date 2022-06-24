@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checking.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:57:41 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/06/21 22:33:01 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:12:06 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	check_duble_element(char **six_lines)
 	return (0);
 }
 
-int	map_final_check(char **map)
+int	map_final_check(char **map,t_rend *game)
 {
 	int		j;
 	char	**six_lines;
@@ -94,7 +94,7 @@ int	map_final_check(char **map)
 		six_lines[j] = strdup(map[j]);
 	}
 	six_lines[j] = NULL;
-	if (map_parsing(six_lines, map))
+	if (map_parsing(six_lines, map,game))
 		return (1);
 	return (0);
 }

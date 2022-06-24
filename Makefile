@@ -10,6 +10,7 @@ SRC = parsing/utils.c \
 	parsing/map_parsing.c \
 	parsing/map_checking.c \
 	parsing/colors_and_new_line.c \
+	gameplay/window_creation.c \
 	main.c
 
 
@@ -21,7 +22,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ) cub3d.h
-	@$(CC) $(OBJ) -o $(NAME) #-lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	@$(CC) $(OBJ) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 clean :
 	@rm -rf $(OBJ)

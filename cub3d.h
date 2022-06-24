@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/21 22:31:25 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/06/24 22:07:28 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,35 @@
 # include <math.h>
 # include <string.h>
 
+typedef struct textter
+{
+	char *so;
+	char *we;
+	char *ea;
+	char *no;
+}t_textter;
+
+typedef struct s_colors
+{
+	int	f[3];
+	int c[3];
+}t_colors;
+
+typedef struct s_rend {
+	char	**map;
+	void	*mlx;
+	void	*mlx_win;
+	char	player;
+	void	*wall;
+	void	*floor;
+	t_colors *colors;
+	t_textter *textter;
+	int		width;
+	int		height;
+	int		i;
+	int		j;
+}	t_rend;
+
 void	ft_error(void);
 size_t	ft_strlen(const char *s);
 void	check_extension(char *av);
@@ -33,14 +62,17 @@ char	*ft_strrchr(const char *s, int c);
 size_t	ft_strlen(const	char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
-int		map_final_check(char **map);
+int		map_final_check(char **map,t_rend *game);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
-int		check_colors(char **six_lines);
+int		check_colors(char **six_lines, int i, int k, int j);
 int		check_first_sixlines(char *s);
 int		check_textur(char **six_lines);
 int		check_duble_element(char **six_lines);
 int		ft_check_new_line(char **map, char *s);
-int		map_parsing(char **six_lines, char **map);
+int		map_parsing(char **six_lines, char **map,t_rend *game);
+
+void	image_rendering(t_rend *game);
+void	mlx_start(char **map,t_rend *game);
 
 #endif
