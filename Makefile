@@ -11,6 +11,7 @@ SRC = parsing/utils.c \
 	parsing/map_checking.c \
 	parsing/colors_and_new_line.c \
 	gameplay/window_creation.c \
+	gameplay/take_keys.c\
 	main.c
 
 

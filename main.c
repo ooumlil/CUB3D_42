@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/06/24 22:13:45 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/25 14:20:30 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,11 @@ int	main(int ac, char **av)
 	map = map_filling(fd);
 	if (!map_final_check(map,&game))
 	{
+		// game.mlx = mlx_init();
+		//game.mlx_win = mlx_new_window(game.mlx,1080,700,"cub");
 		mlx_start(map,&game);
+		//mlx_loop(mlx);
+		
 	}
 	return (0);
 }

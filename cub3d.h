@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/24 22:07:28 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/25 18:49:02 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ typedef struct s_rend {
 	void	*mlx_win;
 	char	player;
 	void	*wall;
+	void	*empty;
+	void	*spaces;
+	void	*p;
 	void	*floor;
 	t_colors *colors;
 	t_textter *textter;
@@ -72,7 +75,8 @@ int		check_duble_element(char **six_lines);
 int		ft_check_new_line(char **map, char *s);
 int		map_parsing(char **six_lines, char **map,t_rend *game);
 
-void	image_rendering(t_rend *game);
+int	image_rendering(t_rend *game);
 void	mlx_start(char **map,t_rend *game);
 
+int	take_key(int key, t_rend *m);
 #endif
