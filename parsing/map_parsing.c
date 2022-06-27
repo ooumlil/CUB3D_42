@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 21:16:54 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/24 22:11:28 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:37:02 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	init_structers(char **element,char player,t_rend *game)
 		i++;
 	}
 }
+
 int	check_player(char **map, int i, int *k,char *p)
 {
 	int	j;
@@ -99,6 +100,7 @@ int	check_player(char **map, int i, int *k,char *p)
 	}
 	return (0);
 }
+
 int	check_map_is_close_norm(char **map, int i, int j, char p)
 {
 	if (map[i][j + 1] != '1' && map[i][j + 1] != '0' \

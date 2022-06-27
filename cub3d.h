@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/27 20:53:42 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:35:58 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,40 +21,40 @@
 # include <math.h>
 # include <string.h>
 
-#define pi 3.14159265359
-#define FOV_ANGEL (60 * (pi / 180))
-typedef struct textter
-{
-	char *so;
-	char *we;
-	char *ea;
-	char *no;
-}t_textter;
+# define PI 3.14159265359
+# define FOV_ANGEL (60 * (PI / 180))
+
+typedef struct textter {
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*no;
+}	t_textter;
 
 typedef struct s_colors
 {
 	int	f[3];
-	int c[3];
-}t_colors;
+	int	c[3];
+}	t_colors;
 
 typedef struct s_rend {
-	char	**map;
-	void	*mlx;
-	void	*mlx_win;
-	char	player;
-	void	*wall;
-	void	*empty;
-	void	*spaces;
-	void	*p;
-	void	*black;
-	void	*floor;
-	t_colors *colors;
-	t_textter *textter;
-	int		width;
-	int		height;
-	int		i;
-	int		j;
-	char	direction;
+	char		**map;
+	void		*mlx;
+	void		*mlx_win;
+	char		player;
+	void		*wall;
+	void		*empty;
+	void		*spaces;
+	void		*p;
+	void		*black;
+	void		*floor;
+	t_colors	*colors;
+	t_textter	*textter;
+	int			width;
+	int			height;
+	int			i;
+	int			j;
+	char		direction;
 }	t_rend;
 
 void	ft_error(void);
@@ -69,7 +69,7 @@ char	*ft_strrchr(const char *s, int c);
 size_t	ft_strlen(const	char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	**map_filling(int fd);
-int		map_final_check(char **map,t_rend *game);
+int		map_final_check(char **map, t_rend *game);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		check_colors(char **six_lines, int i, int k, int j);
@@ -77,11 +77,10 @@ int		check_first_sixlines(char *s);
 int		check_textur(char **six_lines);
 int		check_duble_element(char **six_lines);
 int		ft_check_new_line(char **map, char *s);
-int		map_parsing(char **six_lines, char **map,t_rend *game);
-
-int	image_rendering(t_rend *game);
-void	mlx_start(char **map,t_rend *game);
-
-int	take_key(int key, t_rend *m);
+int		map_parsing(char **six_lines, char **map, t_rend *game);
+int		image_rendering(t_rend *game);
+void	mlx_start(char **map, t_rend *game);
+int		take_key(int key, t_rend *m);
 void	get_index(t_rend *m, int *x, int *y);
+
 #endif
