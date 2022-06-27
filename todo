@@ -1,1 +1,19 @@
 struct player colors textter
+
+no  n 4 N
+so  s 2 S
+ea  e 3 E
+we  w 1 W
+
+
+dda
+
+line (x1,y1) (x2,y2) 
+
+start and end  
+
+dy
+dx 
+c = V dx2*dy2
+
+star + dir^ *length = end;

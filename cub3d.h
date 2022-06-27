@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/25 18:49:02 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/27 20:53:42 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <math.h>
 # include <string.h>
 
+#define pi 3.14159265359
+#define FOV_ANGEL (60 * (pi / 180))
 typedef struct textter
 {
 	char *so;
@@ -44,6 +46,7 @@ typedef struct s_rend {
 	void	*empty;
 	void	*spaces;
 	void	*p;
+	void	*black;
 	void	*floor;
 	t_colors *colors;
 	t_textter *textter;
@@ -51,6 +54,7 @@ typedef struct s_rend {
 	int		height;
 	int		i;
 	int		j;
+	char	direction;
 }	t_rend;
 
 void	ft_error(void);
@@ -79,4 +83,5 @@ int	image_rendering(t_rend *game);
 void	mlx_start(char **map,t_rend *game);
 
 int	take_key(int key, t_rend *m);
+void	get_index(t_rend *m, int *x, int *y);
 #endif
