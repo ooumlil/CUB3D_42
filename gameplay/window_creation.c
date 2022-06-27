@@ -6,13 +6,34 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/27 21:25:44 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/27 22:53:25 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
+void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
+{
+	int dx = xB - xA;
+	int dy = yB - yA;
 
+	float step = fmaxf(abs(dx),abs(dy));
+	float xinc = dx/step;
+	float yinc = dy/step;
+
+	float x = xA,y = yA;
+
+	while (step >= 0)
+	{
+		mlx_pixel_put(game->mlx,game->mlx_win,round(x),round(y),0xff3300);
+		x += xinc;
+		y += yinc;	
+		step--;
+	}
+	
+	
+	
+}
 int	image_rendering(t_rend *game)
 {
 	game->i = 0;
@@ -41,12 +62,13 @@ int	image_rendering(t_rend *game)
 		game->j = 0;
 		while(game->map[game->i][game->j])
 		{
-		//	if(game->map[game->i][game->j] == '1')
-			//	mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->j*5, game->i*5);
 			if(game->map[game->i][game->j] == '0')
 				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, game->j*5, game->i*5);
 			if(game->map[game->i][game->j] == game->player)
+			{
 				mlx_put_image_to_window(game->mlx, game->mlx_win, game->p, game->j*5, game->i*5);//mlx_pixel_put (game->mlx,game->mlx_win,game->j*5,game->i*5,  0xff3300);
+				drawDDA(game->j*5,game->i*5,game->j*5-10,game->i*5+10,game);
+			}
 			game->j++;
 		}
 		game->i++;
@@ -66,13 +88,13 @@ int	lines(char **map)
 
 void	mlx_start(char **map,t_rend *game)
 {
-	// t_rend	game;
-
 	int i;
 	char **t_map;
-//	int x;
-//	int y;
 	int k;
+	int h; 
+	int b;
+	int j;
+	
 	i = 6;
 	k = ft_strlen(map[i]);
 	while(map[i])
@@ -82,12 +104,9 @@ void	mlx_start(char **map,t_rend *game)
 			k = ft_strlen(map[i]);
 		i++;
 	}
-	int h; 
 	h = i;
-	int b;
 	b = 0;
 	i = 6;
-	int j;
 	j = 0;
 	t_map = malloc(sizeof(char *)*h-6);
 	while(map[i])
@@ -122,16 +141,10 @@ void	mlx_start(char **map,t_rend *game)
 	game->wall = mlx_xpm_file_to_image(game->mlx, "img/P.xpm", &game->width, &game->height);
 	game->black = mlx_xpm_file_to_image(game->mlx, "img/black1.xpm", &game->width, &game->height);
 	game->empty = mlx_xpm_file_to_image(game->mlx, "img/square-1.xpm", &game->width, &game->height);
-	printf("%d\n",game->height);
 	game->spaces = mlx_xpm_file_to_image(game->mlx, "img/yellow.xpm", &game->width, &game->height);
 	game->p = mlx_xpm_file_to_image(game->mlx, "img/PLA3.xpm", &game->width, &game->height);
-	//mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, 0, 0);
 	game->map = t_map;
-	// puts("yy");
 	image_rendering(game);
-	// puts("jj");
-	//get_index(game,&x,&y);
-	//mlx_pixel_put (game->mlx,game->mlx_win,x+cos(pi/2)*35,y+sin(pi/2)*35, 0xFF00);
 	mlx_hook(game->mlx_win, 2, 0, &take_key, game);
 	//mlx_hook(data.mlx_win, 17, 0, &ft_exit, &data);
 	mlx_loop_hook(game->mlx, image_rendering, game);

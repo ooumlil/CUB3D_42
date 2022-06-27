@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/27 21:29:45 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:49:52 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,16 @@ void	key_13(t_rend *m)
 int	take_key(int key, t_rend *m)
 {
 	if (key == 0)
-	{
-		//m->direction = 'W';
 		key_0(m, m->player);
-	}
 	if (key == 1)
-	{
-		//m->direction = 'S';
 		key_1(m, m->player);
-	}
 	if (key == 2)
-	{
-		//m->direction = 'E';
 		key_2(m, m->player);
-	}
 	if (key == 13)
-	{
-		//m->direction = 'N';
 		key_13(m);
-	}
 	if (key == 53)
 		exit (0);
+	// else
+	// 	printf("%d\n",key);
 	return (key);
 }
