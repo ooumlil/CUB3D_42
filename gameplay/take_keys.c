@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/06/27 21:49:52 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/01 17:12:14 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,14 @@ int	take_key(int key, t_rend *m)
 		key_2(m, m->player);
 	if (key == 13)
 		key_13(m);
+	if(key == 126)
+		m->direction = 'N';
+	if(key == 125)
+		m->direction = 'S';
+	if(key == 123)
+		m->direction = 'W';
+	if(key == 124)
+		m->direction = 'E';
 	if (key == 53)
 		exit (0);
 	// else

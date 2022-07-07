@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/06/27 21:35:58 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/04 17:03:40 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <string.h>
-
+///////////////////////////////////////////
 # define PI 3.14159265359
 # define FOV_ANGEL (60 * (PI / 180))
 
@@ -42,6 +42,7 @@ typedef struct s_rend {
 	void		*mlx;
 	void		*mlx_win;
 	char		player;
+	float		angel;
 	void		*wall;
 	void		*empty;
 	void		*spaces;
@@ -82,5 +83,6 @@ int		image_rendering(t_rend *game);
 void	mlx_start(char **map, t_rend *game);
 int		take_key(int key, t_rend *m);
 void	get_index(t_rend *m, int *x, int *y);
+int	lines(char **map);
 
 #endif
