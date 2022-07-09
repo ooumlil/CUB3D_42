@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/09 18:15:35 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 22:44:16 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,23 @@ int	image_rendering(t_rend *game)
 	movestep = game->pplayer->wlk_d * game->pplayer->moveSpeed;
 	game->pplayer->x += cos(game->pplayer->rotatangle)*movestep;
 	game->pplayer->y += sin(game->pplayer->rotatangle)*movestep;
-	// if(game->map[game->pplayer->y][game->pplayer->x] == '1' && game->map[game->pplayer->y][game->pplayer->x])
-	// 	return (0);
+	if(hit_thewall(game))
+	{
+		if(game->pplayer->wlk_d < 0)
+			game->pplayer->wlk_d +=1;
+		else
+			game->pplayer->wlk_d -=1;
+		printf("ffd\n");
+		//game->pplayer->x -= cos(game->pplayer->rotatangle)*movestep;
+		//game->pplayer->y -= sin(game->pplayer->rotatangle)*movestep;
+		game->pplayer->rotatangle -= game->pplayer->turn_d * game->pplayer->rotationSpeed; 
+		movestep = game->pplayer->wlk_d * game->pplayer->moveSpeed;
+		game->pplayer->x -= cos(game->pplayer->rotatangle)*movestep;
+		game->pplayer->y -= sin(game->pplayer->rotatangle)*movestep;
+	}
+	else
+		printf("ffs\n");
+			
 	game->i = 0;
 	while(game->map[game->i])
 	{
@@ -164,11 +179,11 @@ int	image_rendering(t_rend *game)
 		}
 		game->i++;
 	}
-	printf("%d\n",game->pplayer->turn_d);
+	// printf("%d\n",game->pplayer->turn_d);
 	player_render(game);
-	//game->pplayer->turn_d = 0;
+	game->pplayer->turn_d = 0;
 	game->pplayer->wlk_d = 0;
-	printf("%d\n",game->pplayer->turn_d);
+	// printf("%d\n",game->pplayer->turn_d);
 	return (0);
 }
 // int draw_minimap(t_rend *game)

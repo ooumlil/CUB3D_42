@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/07/09 18:14:03 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:58:22 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,6 @@ void	get_index(t_rend *m, int *x, int *y);
 int	lines(char **map);
 void player_init(t_rend *m);
 int take_key2(int key, t_rend *m);
+/////////
+int hit_thewall(t_rend *m);
 #endif

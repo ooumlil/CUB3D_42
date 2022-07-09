@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/09 18:05:01 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 22:32:59 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,20 @@
 // {
 // 	exit (0);
 // }
+int hit_thewall(t_rend *m)
+{
+	if((int)floor(m->pplayer->x) >= m->mapx || (int)floor(m->pplayer->x)  < 0 || (int)floor(m->pplayer->y)  < 0 ||(int)floor(m->pplayer->y) > lines(m->map))
+	{
+		puts("toool");
+		return (1);
+	}
+	if(m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)] == '1')
+	{
+		printf("{%c}\n",m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)]);
+		return (1);
+	}
+	return (0);
+}
 void	get_index(t_rend *m, int *x, int *y)
 {
 	*y = 0;
@@ -100,17 +114,29 @@ int take_key2(int key, t_rend *m)
 int take_key_1(int key, t_rend *m)
 {
 	if (key == 0)
-		m->pplayer->x -= 1;
+	{
+		if(m->map[m->pplayer->y][m->pplayer->x -1] != '1')
+			m->pplayer->x -= 1;
+	}
 	else if (key == 1)
 		m->pplayer->wlk_d += 1;
 	else if (key == 2)
-		m->pplayer->x += 1;
+	{
+		if(m->map[m->pplayer->y][m->pplayer->x + 1] != '1')
+			m->pplayer->x += 1;
+	}
 	else if (key == 13)
+	{
 		m->pplayer->wlk_d -= 1;
+	}
 	else if(key == 123)
+	{
 		m->pplayer->turn_d -= 1;
+	}
 	else if(key == 124)
+	{
 		m->pplayer->turn_d += 1;
+	}
 	else if (key == 53)
 		exit (0);
 	return(key);

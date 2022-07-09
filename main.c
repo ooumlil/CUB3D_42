@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/09 18:16:40 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:28:22 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void player_init(t_rend *m)
 	m->pplayer->turn_d = 0;
 	m->pplayer->wlk_d = 0;
 	m->pplayer->rotatangle = PI/2;
-	m->pplayer->moveSpeed = 3.0;
+	m->pplayer->moveSpeed = 2.0;
 	m->pplayer->rotationSpeed = 3 * (PI/180);
 }
 int	main(int ac, char **av)
