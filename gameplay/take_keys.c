@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/01 17:12:14 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:05:01 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,6 @@ void	key_0(t_rend *game, char p)
 	int		y;
 
 	get_index(game, &x, &y);
-	// if (game->map[y][x - 1] == 'C')
-	// {
-	// 	game->map[y][x - 1] = p;
-	// 	game->map[y][x] = '0';
-	// }
 	if (game->map[y][x - 1] == '0')
 	{
 		game->map[y][x - 1] = p;
@@ -54,11 +49,6 @@ void	key_1(t_rend *game, char p)
 	int		y;
 
 	get_index(game, &x, &y);
-	// if (game->map[y + 1][x] == 'C')
-	// {
-	// 	game->map[y + 1][x] = p;
-	// 	game->map[y][x] = '0';
-	// }
 	if (game->map[y + 1][x] == '0')
 	{
 		game->map[y + 1][x] = p;
@@ -72,11 +62,6 @@ void	key_2(t_rend *game, char p)
 	int		y;
 
 	get_index(game, &x, &y);
-	// if (game->map[y][x + 1] == 'C')
-	// {
-	// 	game->map[y][x + 1] = p;
-	// 	game->map[y][x] = '0';
-	// }
 	if (game->map[y][x + 1] == '0')
 	{
 		game->map[y][x + 1] = p;
@@ -90,40 +75,69 @@ void	key_13(t_rend *m)
 	int		y;
 
 	get_index(m, &x, &y);
-	// if (map->map[y - 1][x] == 'C')
-	// {
-	// 	map->map[y - 1][x] = p;
-	// 	map->map[y][x] = '0';
-	// }
-	
 	if (m->map[y - 1][x] == '0')
 	{
 		m->map[y - 1][x] = m->player;
 		m->map[y][x] = '0';
 	}
 }
-
-int	take_key(int key, t_rend *m)
+int take_key2(int key, t_rend *m)
 {
 	if (key == 0)
-		key_0(m, m->player);
-	if (key == 1)
-		key_1(m, m->player);
-	if (key == 2)
-		key_2(m, m->player);
-	if (key == 13)
-		key_13(m);
-	if(key == 126)
-		m->direction = 'N';
-	if(key == 125)
-		m->direction = 'S';
-	if(key == 123)
-		m->direction = 'W';
-	if(key == 124)
-		m->direction = 'E';
-	if (key == 53)
+		m->pplayer->wlk_d = 0;
+	else if (key == 1)
+		m->pplayer->wlk_d = 0;
+	else if (key == 2)
+		m->pplayer->wlk_d = 0;
+	else if (key == 13)
+		m->pplayer->wlk_d = 0;
+	else if(key == 123)
+		m->pplayer->turn_d = 0;
+	else if(key == 124)
+		m->pplayer->turn_d = 0;
+	return(key);
+}
+int take_key_1(int key, t_rend *m)
+{
+	if (key == 0)
+		m->pplayer->x -= 1;
+	else if (key == 1)
+		m->pplayer->wlk_d += 1;
+	else if (key == 2)
+		m->pplayer->x += 1;
+	else if (key == 13)
+		m->pplayer->wlk_d -= 1;
+	else if(key == 123)
+		m->pplayer->turn_d -= 1;
+	else if(key == 124)
+		m->pplayer->turn_d += 1;
+	else if (key == 53)
 		exit (0);
-	// else
-	// 	printf("%d\n",key);
+	return(key);
+}
+
+int	 take_key(int key, t_rend *m)
+{
+	// if (key == 0)
+	// 	key_0(m, m->player);
+	// if (key == 1)
+	// 	key_1(m, m->player);
+	// if (key == 2)
+	// 	key_2(m, m->player);
+	// if (key == 13)
+	// 	key_13(m);
+	// if(key == 126)
+	// 	m->direction = 'N';
+	// if(key == 125)
+	// 	m->direction = 'S';
+	// if(key == 123)
+	// 	m->d += 6;
+	// if(key == 124)
+	// 	m->d -= 6;
+	// if (key == 53)
+	// 	exit (0);
+	// // else
+	// // 	printf("%d\n",key);
+	take_key_1(key,m);
 	return (key);
 }

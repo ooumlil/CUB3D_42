@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/04 18:51:08 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:16:40 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,18 @@ void	ft_error(void)
 	printf("Error\n2 Arguments Needed\n");
 	exit (1);
 }
-
+void player_init(t_rend *m)
+{
+	m->pplayer = malloc(sizeof(t_player));
+	m->pplayer->x = 0;
+	m->pplayer->y = 0;
+	get_index(m,&m->pplayer->x,&m->pplayer->y);
+	m->pplayer->turn_d = 0;
+	m->pplayer->wlk_d = 0;
+	m->pplayer->rotatangle = PI/2;
+	m->pplayer->moveSpeed = 3.0;
+	m->pplayer->rotationSpeed = 3 * (PI/180);
+}
 int	main(int ac, char **av)
 {
 	int		fd;
@@ -39,6 +50,9 @@ int	main(int ac, char **av)
 	{
 		// game.mlx = mlx_init();
 		//game.mlx_win = mlx_new_window(game.mlx,1080,700,"cub");
+		//player_init(&game);
+		game.d = 10;
+		game.roa = PI/2;
 		mlx_start(map,&game);
 		//mlx_loop(mlx);
 		

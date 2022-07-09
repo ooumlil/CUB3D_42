@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/07/04 17:03:40 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:14:03 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,16 @@ typedef struct s_colors
 	int	f[3];
 	int	c[3];
 }	t_colors;
-
+typedef struct p_player
+{
+	int x;
+	int y;
+	int turn_d;
+	int wlk_d;
+	double rotatangle;
+	float moveSpeed;
+	float rotationSpeed;
+} t_player;
 typedef struct s_rend {
 	char		**map;
 	void		*mlx;
@@ -47,13 +56,19 @@ typedef struct s_rend {
 	void		*empty;
 	void		*spaces;
 	void		*p;
+	int			roa;
+	int mapx;
+	int mapy;
 	void		*black;
 	void		*floor;
 	t_colors	*colors;
 	t_textter	*textter;
+	t_player	*pplayer;
 	int			width;
 	int			height;
 	int			i;
+	int			d;
+	int			n;
 	int			j;
 	char		direction;
 }	t_rend;
@@ -84,5 +99,6 @@ void	mlx_start(char **map, t_rend *game);
 int		take_key(int key, t_rend *m);
 void	get_index(t_rend *m, int *x, int *y);
 int	lines(char **map);
-
+void player_init(t_rend *m);
+int take_key2(int key, t_rend *m);
 #endif

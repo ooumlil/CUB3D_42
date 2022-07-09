@@ -6,50 +6,18 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/07 13:42:14 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/09 18:15:35 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-void find_endline(int *x,int *y,t_rend *game)
-{
-	get_index(game,x,y);
-	if(game->direction == 'N')
-	{
-		while(game->map[*y - 1][*x] == '0' && game->map[*y - 1][*x])
-			(*y)--;
-		//(*y) *= -1;
-	}
-	else if(game->direction == 'S')
-	{
-		while(game->map[*y + 1][*x] == '0' && game->map[*y + 1][*x])
-			(*y)++;
-		//(*y) *= -1;
-		//(*x) *= -1;
-	}
-	else if(game->direction == 'W')
-	{
-		while(game->map[*y][*x - 1] == '0' && game->map[*y][*x - 1])
-			(*x)--;
-		//(*x) *= -1;
-	}
-	else if(game->direction == 'E')
-	{
-		while(game->map[*y][*x + 1] == '0' && game->map[*y][*x + 1])
-			(*x)++;
-		(*x) *= -1;
-		//(*y) *= -1;
-	}
-	return ;
-}
 void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
 {
-	//yB = yA;
-	//xB = xA;
-	find_endline(&xB,&yB,game);
-	yB *= 3;
-	xB *= 3;
+	// yB = yA+3;
+	// xB = xA+3;
+	//find_endline(&xB,&yB,game);
+	// yB *= 3;
+	// xB *= 3;
 	int dx = xB - xA;
 	int dy = yB - yA;
 
@@ -63,15 +31,105 @@ void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
 	{
 		mlx_pixel_put(game->mlx,game->mlx_win,round(x),round(y),0xff3300);
 		x += xinc;
-		y += yinc;	
+		y += yinc;
+		// if(game->map[(int)y][(int)x] == '1')
+		// 	break ;
 		step--;
 	}
-	
+	//printf("%f %f-------\n", x, y);
 	
 	
 }
+void drawray(t_rend *game)
+{
+	int py;
+	int px;
+	get_index(game,&px,&py);
+	int r,dof;
+	float rx,ry,ra,xo,yo;
+	ra =PI/2;
+	r = 0;
+	while(r < 1)
+	{
+		r++;
+		dof=0;
+		float atan=-1/tan(ra);
+		if(ra>PI)
+		{
+			ry=(((int)py>>6)<<6)-0.0001;
+			rx=(py-ry)*atan+px;
+			yo = -64;
+			xo=-yo*atan;
+		}
+		if(ra<PI)
+		{
+			ry=(((int)py>>6)<<6)+64;
+			rx=(py-ry)*atan+px;
+			yo = 64;
+			xo=-yo*atan;
+		}
+		if(ra == 0 || ra == PI )
+		{
+			rx=px;
+			ry=py;
+			dof=8;	
+		}
+		// while(dof<8)
+		// {
+		// 	mx = (int)(rx)>>6;
+		// 	my(int)(ry)>>6;
+		// 	mp=my*lines(game->map)+mx;
+		// 	//if(game->map[] )
+		// }
+		drawDDA(px*10,py*10,rx*10,ry*10,game);
+	}
+}
+// void find_endline(int *x,int *y,t_rend *game)
+// {
+// 	get_index(game,x,y);
+// 	if(game->direction == 'N')
+// 	{
+// 		while(game->map[*y - 1][*x] == '0' && game->map[*y - 1][*x])
+// 			(*y)--;
+// 		//(*y) *= -1;
+// 	}
+// 	else if(game->direction == 'S' && *y != lines(game->map))
+// 	{
+// 		while(game->map[*y + 1][*x] == '0' && game->map[*y + 1][*x])
+// 			(*y)++;
+// 		(*y) *= -1;
+// 		(*x) *= -1;
+// 	}
+// 	else if(game->direction == 'W')
+// 	{
+// 		while(game->map[*y][*x - 1] == '0' && game->map[*y][*x - 1])
+// 			(*x)--;
+// 	}
+// 	else if(game->direction == 'E')
+// 	{
+// 		while(game->map[*y][*x + 1] == '0' && game->map[*y][*x + 1] && *x != (int)ft_strlen(game->map[*y]))
+// 			(*x)++;
+// 		(*x) *= -1;
+// 	}
+// 	return ;
+// }
+int player_render(t_rend *game)
+{
+	//mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->pplayer->x-1*10, game->pplayer->y*10);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->pplayer->x*10, game->pplayer->y*10);
+	mlx_put_image_to_window(game->mlx, game->mlx_win, game->p, game->pplayer->x*10, game->pplayer->y*10);
+	drawDDA(game->pplayer->x*10,game->pplayer->y*10,game->pplayer->x*10+cos(game->pplayer->rotatangle)*20,game->pplayer->y*10+sin(game->pplayer->rotatangle)*20,game);
+	return(0);
+}
 int	image_rendering(t_rend *game)
 {
+	int movestep;
+	game->pplayer->rotatangle += game->pplayer->turn_d * game->pplayer->rotationSpeed; 
+	movestep = game->pplayer->wlk_d * game->pplayer->moveSpeed;
+	game->pplayer->x += cos(game->pplayer->rotatangle)*movestep;
+	game->pplayer->y += sin(game->pplayer->rotatangle)*movestep;
+	// if(game->map[game->pplayer->y][game->pplayer->x] == '1' && game->map[game->pplayer->y][game->pplayer->x])
+	// 	return (0);
 	game->i = 0;
 	while(game->map[game->i])
 	{
@@ -79,18 +137,14 @@ int	image_rendering(t_rend *game)
 		while (game->map[game->i][game->j])
 		{
 			if(game->map[game->i][game->j] == '0')
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->j*3, game->i*3);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->j*10, game->i*10);
 			if(game->map[game->i][game->j] == '1')
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->black, game->j*3, game->i*3);
-			if(game->map[game->i][game->j] == game->player)
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->black, game->j*10, game->i*10);
+			
+			else//if(game->map[game->i][game->j] == game->player)
 			{
-				int g;
-				g  =0;
-				while(g++ < 60)
-					drawDDA(game->j*3,game->i*3,0,0,game);
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->j*3, game->i*3);
-				// mlx_pixel_put (game->mlx,game->mlx_win,game->j+cos(pi/2)*10,game->i+sin(pi/2)*10, 0xFF00);
-				// mlx_pixel_put (game->mlx,game->mlx_win,game->j*50,game->i*50,0xff3300);
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->j*10, game->i*10);
+				//mlx_put_image_to_window(game->mlx, game->mlx_win, game->black, game->j*10, game->i*10);
 			}
 			game->j++;
 		}
@@ -103,15 +157,18 @@ int	image_rendering(t_rend *game)
 		while(game->map[game->i][game->j])
 		{
 			if(game->map[game->i][game->j] == '0')
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, game->j*3, game->i*3);
-			if(game->map[game->i][game->j] == game->player)
-			{
-				mlx_put_image_to_window(game->mlx, game->mlx_win, game->p, game->j*3, game->i*3);//mlx_pixel_put (game->mlx,game->mlx_win,game->j*5,game->i*5,  0xff3300);
-			}
+				mlx_put_image_to_window(game->mlx, game->mlx_win, game->wall, game->j*10, game->i*10);
+			if(game->map[game->i][game->j] == '1')
+				game->i = game->i;
 			game->j++;
 		}
 		game->i++;
 	}
+	printf("%d\n",game->pplayer->turn_d);
+	player_render(game);
+	//game->pplayer->turn_d = 0;
+	game->pplayer->wlk_d = 0;
+	printf("%d\n",game->pplayer->turn_d);
 	return (0);
 }
 // int draw_minimap(t_rend *game)
@@ -206,6 +263,7 @@ void	mlx_start(char **map,t_rend *game)
 			k = ft_strlen(map[i]);
 		i++;
 	}
+	game->mapx = k;
 	h = i;
 	b = 0;
 	i = 6;
@@ -229,8 +287,8 @@ void	mlx_start(char **map,t_rend *game)
 				t_map[b][j] = '1';
 				j++;
 			}
-			t_map[b][j] = '\0';
 		}
+		t_map[b][j] = '\0';
 		i++;
 		b++;
 	}
@@ -238,7 +296,7 @@ void	mlx_start(char **map,t_rend *game)
 	i = 0;
 	while(t_map[i])
 		printf("%s\n",t_map[i++]);
-	exit(0);
+	// exit(0);
 	game->mlx = mlx_init();
 	game->mlx_win = mlx_new_window(game->mlx,1080 ,720,"cub3d");
 	game->wall = mlx_xpm_file_to_image(game->mlx, "img/P.xpm", &game->width, &game->height);
@@ -247,12 +305,16 @@ void	mlx_start(char **map,t_rend *game)
 	game->spaces = mlx_xpm_file_to_image(game->mlx, "img/yellow.xpm", &game->width, &game->height);
 	game->p = mlx_xpm_file_to_image(game->mlx, "img/PLA3.xpm", &game->width, &game->height);
 	game->map = t_map;
+	player_init(game);
 	image_rendering(game);
+	//player_render(game);
 	//draw_minimap(game);
 	//game->direction = game->player;
-	mlx_hook(game->mlx_win, 2, 0, &take_key, game);
 	//mlx_hook(data.mlx_win, 17, 0, &ft_exit, &data);
+	mlx_hook(game->mlx_win, 2, 0, &take_key, game);
 	mlx_loop_hook(game->mlx, image_rendering, game);
+	//mlx_loop_hook(game->mlx, player_render, game);
+	//mlx_hook(game->mlx_win, 2, 0, &take_key2, game);
 	//mlx_loop_hook(game->mlx, draw_minimap, game);
 	mlx_loop(game->mlx);
 }
