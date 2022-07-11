@@ -6,11 +6,12 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/09 22:44:16 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/11 23:38:50 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
 void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
 {
 	// yB = yA+3;
@@ -39,6 +40,99 @@ void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
 	//printf("%f %f-------\n", x, y);
 	
 	
+}
+float normaliseangle(float angle)
+{
+	angle = remainder(angle ,(2*PI));
+	if(angle < 0)
+	{
+		angle = (2*PI) + angle;
+	}
+	return (angle);
+}
+void castSingleRay(float rayAngle,t_rend *m) {
+	// Make sure the angle is between 0 and 360 degrees
+	rayAngle = normaliseangle(rayAngle);
+
+	// Moving right/left? up/down? Determined by
+	// which quadrant the angle is in
+	int right = (rayAngle > 2*PI * 0.75 || rayAngle < 2*PI * 0.25);
+	//int up = (rayAngle < 0 || rayAngle > PI);
+
+	float angleSin = sin(rayAngle);
+	float angleCos = cos(rayAngle);
+
+	// The distance to the block we hit
+	int dist = 0;
+	// The x and y coord of where the ray hit the block
+	float xHit = 0, yHit = 0;
+	// The x-coord on the texture of the block,
+	// i.e. what part of the texture are we going to render
+	//var textureX;
+	// The (x,y) map coords of the block
+	//float wallX;
+	//float wallY;
+
+	// First check against the vertical map/wall lines
+	// we do this by moving to the right or left edge
+	// of the block we’re standing in and then moving
+	// in 1 map unit steps horizontally. The amount we have
+	// to move vertically is determined by the slope of
+	// the ray, which is simply defined as sin(angle) / cos(angle).
+
+	// The slope of the straight line made by the ray
+	float slope = angleSin / angleCos;
+	// We move either 1 map unit to the left or right
+	float dX = right ? 1 : -1;
+	// How much to move up or down
+	float dY = dX * slope;
+
+	// Starting horizontal position, at one
+	// of the edges of the current map block
+	float x = right ? ceil(m->pplayer->x) : floor(m->pplayer->x);
+	// Starting vertical position-> We add the small horizontal
+	// step we just made, multiplied by the slope
+	float y = m->pplayer->y + (x - m->pplayer->x) * slope;
+
+	while (x >= 0 && x < m->mapx && y >= 0 && y < lines(m->map))
+	{
+		int wallX = floor(x + (right ? 0 : -1));
+		int wallY = floor(y);
+
+		// Is this point inside a wall block?
+		if (m->map[wallY][wallX] != '0') {
+			float distX = x - m->pplayer->x;
+			float distY = y - m->pplayer->y;
+			// The distance from the player to this point, squared
+			dist = sqrt(distX*distX + distY*distY);
+
+			// Save the coordinates of the hit. We only really
+			// use these to draw the rays on minimap
+			xHit = x;
+			yHit = y;
+			break;
+		}
+		x += dX;
+		y += dY;
+	}
+
+	// Horizontal run snipped,
+	// basically the same as vertical run
+
+	if (dist)
+		drawDDA(m->pplayer->x*10,m->pplayer->y*10,xHit*10,yHit*10,m);
+		//rayangle += FOV_ANGLE/NUM_RAYS/2;
+	//drawRay(xHit, yHit);
+}
+int maphaswall(float x,float y,t_rend *m)
+{
+	if(x < 0 || x > m->mapx || y < 0 || y > lines(m->map))
+		return (1);
+	int mx = floor(x);
+	int my = floor(y);
+	if(m->map[mx][my] == '1')
+		return (1);
+	return (0);
 }
 void drawray(t_rend *game)
 {
@@ -113,17 +207,171 @@ void drawray(t_rend *game)
 // 	}
 // 	return ;
 // }
+float distensb(float x1,float y1,float x2,float y2)
+{
+	return(sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
+}
 int player_render(t_rend *game)
 {
 	//mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->pplayer->x-1*10, game->pplayer->y*10);
 	mlx_put_image_to_window(game->mlx, game->mlx_win, game->empty, game->pplayer->x*10, game->pplayer->y*10);
-	mlx_put_image_to_window(game->mlx, game->mlx_win, game->p, game->pplayer->x*10, game->pplayer->y*10);
+	//mlx_put_image_to_window(game->mlx, game->mlx_win, game->p, game->pplayer->x*10, game->pplayer->y*10);
+	mlx_pixel_put(game->mlx,game->mlx_win,game->pplayer->x*10,game->pplayer->y*10,0xff3300);
 	drawDDA(game->pplayer->x*10,game->pplayer->y*10,game->pplayer->x*10+cos(game->pplayer->rotatangle)*20,game->pplayer->y*10+sin(game->pplayer->rotatangle)*20,game);
 	return(0);
+}
+// float normaliseangle(float angle)
+// {
+// 	angle = remainder(angle ,(2*PI));
+// 	if(angle < 0)
+// 	{
+// 		angle = (2*PI) + angle;
+// 	}
+// 	return (angle);
+// }
+void c_r(float rayangle,int i,t_rend *m)
+{
+	rayangle = normaliseangle(rayangle);
+	
+	int israyfacingdown = rayangle > 0 && rayangle < PI;
+	int israyfacingup = !israyfacingdown;
+	int israyfacingright = rayangle < 0.75 *PI || rayangle > 0.25*PI;
+	int israyfacingleft = !israyfacingright;
+	float xintercept,yintercept;
+	float xstep,ystep;
+	//////////////////////////////
+	int foundhorzwallhitt = 0;
+	float howhx = 0;
+	float howhy = 0;
+	int howcontent = 0;
+	//////////////////////////////
+	//find y
+	yintercept = floor(m->pplayer->y/10)*10;
+	yintercept += israyfacingdown ? 10  : 0;
+	//////////////////////////////
+	xintercept = m->pplayer->x + (yintercept - m->pplayer->y)/tan(rayangle);
+	/////////////////////////////
+	ystep = 10;
+	ystep *= israyfacingup ? -1 : 1;
+	////////////////////////////////////
+	xstep = 10/tan(rayangle);
+	xstep *= (israyfacingleft && xstep > 0) ? -1 : 1;
+	xstep *= (israyfacingright && xstep < 0) ? -1 : 1;
+
+	//////////////////////////////////////
+	float nexthorx = xintercept;
+	float nexthory = yintercept;
+
+	////incremnt steps
+	while(nexthorx >= 0 && nexthorx <= m->mapx && nexthory >= 0 && nexthory <= lines(m->map))
+	{
+		float xtocheck = nexthorx;
+		float ytocheck = nexthory + (israyfacingup ? -1 :0);
+		if(maphaswall(xtocheck,ytocheck,m))
+		{
+			//////is wall
+			//puts("wall");
+			howhx = nexthorx;
+			howhy = nexthory;
+			howcontent = (int)(m->map[(int)floor(ytocheck/10)][(int)floor(xtocheck/10)]);
+			foundhorzwallhitt = 1;
+			break;
+		}
+		else
+		{
+			nexthorx += xstep;
+			nexthory += ystep;
+		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////
+	//virticale part////////
+	//////////////////////////////
+	int foundvorzwallhitt = 0;
+	float vowvx = 0;
+	float vowvy = 0;
+	int viwcontent = 0;
+	//////////////////////////////
+	//find y
+	xintercept = floor(m->pplayer->x/10)*10;
+	xintercept += israyfacingright ? 10  : 0;
+	//////////////////////////////
+	yintercept = m->pplayer->y + (xintercept - m->pplayer->x)*tan(rayangle);
+	/////////////////////////////
+	xstep = 10;
+	xstep *= israyfacingleft ? -1 : 1;
+	////////////////////////////////////
+	ystep = 10*tan(rayangle);
+	ystep *= (israyfacingup && ystep > 0) ? -1 : 1;
+	ystep *= (israyfacingdown && ystep < 0) ? -1 : 1;
+
+	//////////////////////////////////////
+	float nextvorx = xintercept;
+	float nextvory = yintercept;
+
+	////incremnt steps
+	while(nextvorx >= 0 && nextvorx <= m->mapx && nextvory >= 0 && nextvory < lines(m->map))
+	{
+		float ytocheck = nextvory;
+		float xtocheck = nextvorx + (israyfacingleft ? -1 :0);
+		if(maphaswall(xtocheck,ytocheck,m))
+		{
+			//////is wall
+			vowvx = nextvorx;
+			vowvy = nextvory;
+			viwcontent = (int)(m->map[(int)floor(ytocheck/10)][(int)floor(xtocheck/10)]);
+			foundvorzwallhitt = 1;
+			break;
+		}
+		else
+		{
+			nextvorx += xstep;
+			nextvory += ystep;
+		}
+	}
+	/////////h %% v d/////
+	float horhd = foundhorzwallhitt ? distensb(m->pplayer->x,m->pplayer->y,howhx,howhy): INT_MAX;
+	float vihd = foundvorzwallhitt  ? distensb(m->pplayer->x,m->pplayer->y,vowvx,vowvy): INT_MAX;
+	if(vihd < horhd)
+	{
+		m->rays[i].distane = vihd;
+		m->rays[i].wallhitx = vowvx;
+		m->rays[i].wallhity = vowvy;
+		m->rays[i].wallhitcomtent = viwcontent;
+		m->rays[i].washitvertical = 1;
+	}
+	else
+	{
+		m->rays[i].distane = horhd;
+		m->rays[i].wallhitx = howhx;
+		m->rays[i].wallhity = howhy;
+		m->rays[i].wallhitcomtent = howcontent;
+		m->rays[i].washitvertical = 0;
+	}
+	m->rays[i].rayAngle = rayangle;
+	// down left righte up//
+}
+void cast_rays(t_rend *m)
+{
+	int i = 0;
+	int colum = 0;
+	float rayangle =  m->pplayer->rotatangle - (FOV_ANGLE/2);
+	//rays = [];
+	while(i < NUM_RAYS)
+	{ 
+		//c_r(rayangle,i,m);
+		//puts("dd");
+		castSingleRay(rayangle,m);
+		//drawDDA(m->pplayer->x*10,m->pplayer->y*10,m->rays[i].wallhitx*10,m->rays[i].wallhity*10,m);
+		rayangle += FOV_ANGLE/NUM_RAYS;
+		colum++;
+		i++;
+	}
+	return;
 }
 int	image_rendering(t_rend *game)
 {
 	int movestep;
+	mlx_clear_window(game->mlx,game->mlx_win);
 	game->pplayer->rotatangle += game->pplayer->turn_d * game->pplayer->rotationSpeed; 
 	movestep = game->pplayer->wlk_d * game->pplayer->moveSpeed;
 	game->pplayer->x += cos(game->pplayer->rotatangle)*movestep;
@@ -132,9 +380,9 @@ int	image_rendering(t_rend *game)
 	{
 		if(game->pplayer->wlk_d < 0)
 			game->pplayer->wlk_d +=1;
-		else
+		else 
 			game->pplayer->wlk_d -=1;
-		printf("ffd\n");
+		//printf("ffd\n");
 		//game->pplayer->x -= cos(game->pplayer->rotatangle)*movestep;
 		//game->pplayer->y -= sin(game->pplayer->rotatangle)*movestep;
 		game->pplayer->rotatangle -= game->pplayer->turn_d * game->pplayer->rotationSpeed; 
@@ -143,7 +391,7 @@ int	image_rendering(t_rend *game)
 		game->pplayer->y -= sin(game->pplayer->rotatangle)*movestep;
 	}
 	else
-		printf("ffs\n");
+		//printf("ffs\n");
 			
 	game->i = 0;
 	while(game->map[game->i])
@@ -181,6 +429,7 @@ int	image_rendering(t_rend *game)
 	}
 	// printf("%d\n",game->pplayer->turn_d);
 	player_render(game);
+	cast_rays(game);
 	game->pplayer->turn_d = 0;
 	game->pplayer->wlk_d = 0;
 	// printf("%d\n",game->pplayer->turn_d);

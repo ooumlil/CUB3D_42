@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/07/09 18:58:22 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/11 21:55:12 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,32 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
+#include <limits.h>
 # include <string.h>
 ///////////////////////////////////////////
 # define PI 3.14159265359
-# define FOV_ANGEL (60 * (PI / 180))
-
+# define FOV_ANGLE (60 * (PI / 180))
+# define WALL_SPRIT  1
+# define NUM_RAYS (360 / WALL_SPRIT)
 typedef struct textter {
 	char	*so;
 	char	*we;
 	char	*ea;
 	char	*no;
 }	t_textter;
+typedef struct s_ray
+{
+	float rayAngle ;
+	float wallhitx;
+	float wallhity;
+	float distane;
+	int washitvertical;
+	int is_faceingup;
+	int is_facingdown;
+	int is_facingleft;
+	int is_facingright;
+	int wallhitcomtent;
+}t_ray;
 
 typedef struct s_colors
 {
@@ -64,6 +79,7 @@ typedef struct s_rend {
 	t_colors	*colors;
 	t_textter	*textter;
 	t_player	*pplayer;
+	t_ray		*rays;
 	int			width;
 	int			height;
 	int			i;

@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/09 22:32:59 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/11 21:04:42 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int hit_thewall(t_rend *m)
 {
 	if((int)floor(m->pplayer->x) >= m->mapx || (int)floor(m->pplayer->x)  < 0 || (int)floor(m->pplayer->y)  < 0 ||(int)floor(m->pplayer->y) > lines(m->map))
 	{
-		puts("toool");
+		//puts("toool");
 		return (1);
 	}
-	if(m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)] == '1')
+	else if(m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)] == '1')
 	{
-		printf("{%c}\n",m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)]);
+		//printf("{%c}\n",m->map[(int)floor(m->pplayer->y)][(int)floor(m->pplayer->x)]);
 		return (1);
 	}
 	return (0);

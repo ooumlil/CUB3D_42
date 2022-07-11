@@ -6,12 +6,12 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/09 18:28:22 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/11 19:17:06 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
+//int rays[];
 int ft_exit()
 {
 	exit(0);
@@ -53,6 +53,7 @@ int	main(int ac, char **av)
 		//player_init(&game);
 		game.d = 10;
 		game.roa = PI/2;
+		game.rays = malloc(sizeof(t_ray) * NUM_RAYS);
 		mlx_start(map,&game);
 		//mlx_loop(mlx);
 		
