@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/11 19:17:06 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/22 18:17:35 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,15 @@ void player_init(t_rend *m)
 	get_index(m,&m->pplayer->x,&m->pplayer->y);
 	m->pplayer->turn_d = 0;
 	m->pplayer->wlk_d = 0;
-	m->pplayer->rotatangle = PI/2;
-	m->pplayer->moveSpeed = 2.0;
+	if(m->player == 'N')
+		m->pplayer->rotatangle = 3*PI/2;
+	if(m->player == 'S')
+			m->pplayer->rotatangle = PI/2;
+	if(m->player == 'W')
+		m->pplayer->rotatangle = PI;
+	if(m->player == 'E')
+			m->pplayer->rotatangle = 0;
+	m->pplayer->moveSpeed = 3.0;
 	m->pplayer->rotationSpeed = 3 * (PI/180);
 }
 int	main(int ac, char **av)
@@ -51,8 +58,8 @@ int	main(int ac, char **av)
 		// game.mlx = mlx_init();
 		//game.mlx_win = mlx_new_window(game.mlx,1080,700,"cub");
 		//player_init(&game);
-		game.d = 10;
-		game.roa = PI/2;
+		//game.d = 10;
+		//game.roa = PI/2;
 		game.rays = malloc(sizeof(t_ray) * NUM_RAYS);
 		mlx_start(map,&game);
 		//mlx_loop(mlx);
