@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/22 18:17:44 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/23 06:10:37 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int keys(int key , t_rend *m)
 	{
 		m->pplayer->turn_d = -1;
 	}
+	if(key == 53)
+		exit(0);
 	return (0);
 }
 int keys_2(int key , t_rend *m)

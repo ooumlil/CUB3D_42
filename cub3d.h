@@ -6,7 +6,7 @@
 /*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/07/22 18:21:42 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/23 03:19:46 by mfagri           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,21 @@
 # define FOV_ANGLE (60 * (PI / 180))
 # define WALL_SPRIT 1
 # define NUM_RAYS (360 / WALL_SPRIT)
+# define FALSE 0
+# define TRUE 1
 typedef struct textter {
 	char	*so;
 	char	*we;
 	char	*ea;
 	char	*no;
 }	t_textter;
+typedef enum	e_playerface
+{
+	ray_up,
+	ray_down,
+	ray_left,
+	ray_right
+}				t_playerface;
 typedef struct s_ray
 {
 	float rayAngle;
