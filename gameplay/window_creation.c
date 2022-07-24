@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_creation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/23 20:56:10 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/24 01:22:09 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void draw_square(t_rend *game)
         j = 0;
         while(j < 4)
         {
-            mlx_pixel_put(game->mlx, game->mlx_win, game->pplayer->x*16 + i, game->pplayer->y*16+j, 0xff0000);
+            mlx_pixel_put(game->mlx, game->mlx_win, game->pplayer->x+ i, game->pplayer->y+j, 0xff0000);
             j++;
         }
         i++;
@@ -98,7 +98,7 @@ void drawDDA(int xA,int yA,int xB,int yB,t_rend *game)
 
 	while (step >= 0)
 	{
-		// if(game->map[(int)y/10][(int)x/10] == '1')
+		// if(game->map[(int)y/16][(int)x/16] == '1')
 		// 	break;
 		mlx_pixel_put(game->mlx,game->mlx_win,round(x),round(y),0xff3300);
 		x += xinc;
@@ -119,95 +119,80 @@ float normaliseangle(float angle)
 void cast_ray(float rayangel,int i,t_rend *m)
 {
 	m->rays[i].rayAngle = rayangel;
-	//rayangel = normaliseangle(rayangel);
+	rayangel = normaliseangle(rayangel);
 	int wallhitx;
 	int wallhity;
-	// int rayisup;
-	// int rayisdown;
-	// int rayisleft;
-	// int rayisright;
+	int rayisup;
+	int rayisdown;
+	int rayisleft;
+	int rayisright;
 	float distance;
 	float ystep;
 	float xstep; 
 	float yintercept;
 	float xintercept;
-	float rx;
-	float ry;
-	// rayisdown = 0;
-	// rayisright = 0;
+	float hitx;
+	float hity;
+	int fondwall_hit;
+	fondwall_hit = FALSE;
+	rayisdown = 0;
+	rayisright = 0;
 	wallhitx = 0;
 	wallhity =0;
 	distance = 0;
-	// if(rayangel  > 0 && rayangel < PI)
-	// 	rayisdown = 1;
-	// rayisup = !rayisdown;
-	// if(rayangel < 0.5 * PI || rayangel > 1.5 * PI)
-	// 	rayisright = 1;
-	// rayisleft = !rayisright;
+	if(rayangel  > 0 && rayangel < PI)
+		rayisdown = 1;
+	rayisup = !rayisdown;
+	if(rayangel < 0.5 * PI || rayangel > 1.5 * PI)
+		rayisright = 1;
+	rayisleft = !rayisright;
 	//drawDDA(m->pplayer->x*16,m->pplayer->y*16,m->pplayer->x*16+cos(rayangel)*30,m->pplayer->y*16+sin(rayangel)*30,m);
 	////////////////////////////////////////////
 	//////HORIZONTAL RAY !//////////////////////
 	////////////////////////////////////////////
 	
-	yintercept = floor(m->pplayer->y/16 )* 16;
-	yintercept += ray_facing(rayangel, ray_down) ? 16 : 0;
+	yintercept = floor(m->pplayer->y/16) * 16;
+	if(rayisdown)
+		yintercept += 16;
+	//yintercept += ray_facing(rayangel, ray_down) ? 16 : 0;
 	xintercept =  m->pplayer->x + (yintercept - m->pplayer->y) / tan(rayangel);
 	 /////////////////////////////////////////
-	// int j = 16;
 	ystep = 16;
-	ystep *=ray_facing(rayangel, ray_up) ? -1 : 1;
+	if(rayisup)
+		ystep *= -1;
+	//ystep *=ray_facing(rayangel, ray_up) ? -1 : 1;
 	
 	xstep = 16/tan(rayangel);
-	xstep *= (ray_facing(rayangel, ray_left) && xstep > 0) ? -1 : 1;
-	xstep *= (ray_facing(rayangel, ray_right) && xstep < 0) ? -1 : 1;
-	rx = xintercept;
-	ry = yintercept;
-	// float x;
-	// float y;
-	// if(rayisup)
-	// 	ry--;
-	// puts("ff");
-	// while(j--)
-	// {
-	// 	x = rx;
-	// 	y = ry;
-	// 	rx += xstep;
-	// 	ry += ystep;
-	// }
-	// puts("ffg");
+	if(rayisleft && xstep > 0)
+		xstep *= -1;
+	if(rayisright && xstep < 0)
+		xstep *= -1;
 	float	x_chk;
 	float	y_chk;
 
 	x_chk = xintercept;
 	y_chk = yintercept;
-	// if(ray_facing(rayangel, ray_up))
-	// 	y_chk--;
-	// (coord == HORZ) ?
-	// 	horz_inter(vars, next, ray_angle, &step) :
-	// 	vert_inter(vars, next, ray_angle, &step);
-	puts("ff");
+
+	if(rayisup)
+		y_chk--;
 	while (!is_end_window(m, x_chk, y_chk))
 	{
-		x_chk = xintercept + ((ray_facing(rayangel, ray_left)&& 0) ? -1 : 0);
-		x_chk += ((ray_facing(rayangel, ray_right) && 0) ? 1 : 0);
-		y_chk = yintercept + ((ray_facing(rayangel, ray_down)&& 1) ? 1 : 0);
-		y_chk += ((ray_facing(rayangel, ray_up)&&1) ? -1 : 0);
-		//x_chk = xintercept;
-		//y_chk = yintercept;
-		if (is_wall(m, x_chk/16, y_chk/16, '1'))
+		if (is_wall(m, x_chk, y_chk, '1'))
 		{
-			puts("hit");
+			hitx = x_chk;
+			hity = y_chk;
+			fondwall_hit = TRUE;
+			drawDDA(m->pplayer->x,m->pplayer->y,x_chk,y_chk,m);
 			break ;
 		}
 		else
 		{
-			xintercept += xstep;
-			yintercept += ystep;
+			// xintercept += xstep;
+			// yintercept += ystep;
+			x_chk += xstep;
+			y_chk += ystep;
 		}
 	}
-	drawDDA(m->pplayer->x*16,m->pplayer->y*16,xintercept*16,yintercept*16,m);
-	puts("gg");
-	//printf("%d\n",rayisright);
 }
 void rays(t_rend *m)
 {
@@ -238,9 +223,9 @@ void rays(t_rend *m)
 }
 int haswallat(int x,int y,t_rend *m)
 {
-	if(x < 0 || x > m->mapx || y < 0 || y > lines(m->map))
+	if(x/16 < 0 || x/16 > m->mapx || y/16 < 0 || y/16 > lines(m->map))
 		return (1);
-	if(m->map[y][x] == '1')
+	if(m->map[y/16][x/16] == '1')
 		return (1);
 	return (0);
 }
@@ -252,7 +237,7 @@ int player_render(t_rend *game)
 	//mlx_pixel_put(game->mlx,game->mlx_win,game->pplayer->x*10,game->pplayer->y*10,0xff3300);
 	//DrawCircle(game->pplayer->x*10, game->pplayer->y*10,2,game);
 	draw_square(game);
-	drawDDA(game->pplayer->x*16,game->pplayer->y*16,game->pplayer->x*16+cos(game->pplayer->rotatangle)*20,game->pplayer->y*16+sin(game->pplayer->rotatangle)*20,game);
+	//drawDDA(game->pplayer->x,game->pplayer->y,game->pplayer->x+cos(game->pplayer->rotatangle)*20,game->pplayer->y+sin(game->pplayer->rotatangle)*20,game);
 	return(0);
 }
 int	image_rendering(t_rend *game)
@@ -260,6 +245,11 @@ int	image_rendering(t_rend *game)
 	float movestep;
 	float newx;
 	float newy;
+	mlx_clear_window(game->mlx,game->mlx_win);
+	// if (game->pplayer->rotatangle > PI*2)
+    //         game->pplayer->rotatangle -= (2 * PI);
+	// else if (game->pplayer->rotatangle < 0)
+    //         game->pplayer->rotatangle += (2 * PI);
 	game->pplayer->rotatangle += game->pplayer->turn_d * game->pplayer->rotationSpeed;
 	movestep = game->pplayer->wlk_d * game->pplayer->moveSpeed;
 	newx = game->pplayer->x + cos(game->pplayer->rotatangle) * movestep;
@@ -300,8 +290,8 @@ int	image_rendering(t_rend *game)
 	// 	}
 	// 	game->i++;
 	// }
-	rays(game);
 	player_render(game);
+	rays(game);
 	return (0);
 }
 int	lines(char **map)

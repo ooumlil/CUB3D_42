@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 15:42:02 by mmardi            #+#    #+#             */
-/*   Updated: 2022/07/23 03:19:46 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/23 22:37:59 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
-#include <limits.h>
+# include <limits.h>
 # include <string.h>
 ///////////////////////////////////////////
 # define PI 3.14159265359
@@ -28,6 +28,13 @@
 # define NUM_RAYS (360 / WALL_SPRIT)
 # define FALSE 0
 # define TRUE 1
+
+// # define A 0
+// # define S 1
+// # define D 2
+// # define W 13
+// # define ESC 53
+
 typedef struct textter {
 	char	*so;
 	char	*we;

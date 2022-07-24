@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   take_keys.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 18:26:19 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/23 06:10:37 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/24 01:13:41 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,14 @@ int keys(int key , t_rend *m)
 	if(key == 124)
 	{
 		m->pplayer->turn_d = 1;
+        // if (m->pplayer->rotatangle >= PI*2)
+        //     m->pplayer->rotatangle -= (2 * PI);
 	}
 	if(key == 123)
 	{
 		m->pplayer->turn_d = -1;
+		//  if (m->pplayer->rotatangle <= 0)
+        //     m->pplayer->rotatangle += (2 * PI);
 	}
 	if(key == 53)
 		exit(0);

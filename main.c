@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mfagri <mfagri@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/23 06:13:47 by mfagri           ###   ########.fr       */
+/*   Updated: 2022/07/23 23:10:38 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	ft_error(void)
 void player_init(t_rend *m)
 {
 	m->pplayer = malloc(sizeof(t_player));
-	m->pplayer->x = 0;
-	m->pplayer->y = 0;
 	get_index(m,&m->pplayer->x,&m->pplayer->y);
+	m->pplayer->x *= 16;
+	m->pplayer->y *= 16;
 	m->pplayer->turn_d = 0;
 	m->pplayer->wlk_d = 0;
 	if(m->player == 'N')
@@ -40,7 +40,7 @@ void player_init(t_rend *m)
 		m->pplayer->rotatangle = PI;
 	if(m->player == 'E')
 			m->pplayer->rotatangle = 0;
-	m->pplayer->moveSpeed = 1.5;
+	m->pplayer->moveSpeed = 3;
 	m->pplayer->rotationSpeed = 3 * (PI/180);
 }
 int	main(int ac, char **av)
