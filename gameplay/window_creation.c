@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 21:33:58 by mfagri            #+#    #+#             */
-/*   Updated: 2022/07/24 01:22:09 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/07/24 03:00:47 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,12 @@ float normaliseangle(float angle)
 	}
 	return (angle);
 }
+
+float distancebetwenpoint(float x1,float y1,float x2,float y2)
+{
+	return(sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)));
+}
+
 void cast_ray(float rayangel,int i,t_rend *m)
 {
 	m->rays[i].rayAngle = rayangel;
@@ -131,10 +137,10 @@ void cast_ray(float rayangel,int i,t_rend *m)
 	float xstep; 
 	float yintercept;
 	float xintercept;
-	float hitx;
-	float hity;
-	int fondwall_hit;
-	fondwall_hit = FALSE;
+	float hhitx;
+	float hhity;
+	int findhorzwall_hit;
+	findhorzwall_hit = FALSE;
 	rayisdown = 0;
 	rayisright = 0;
 	wallhitx = 0;
@@ -154,14 +160,11 @@ void cast_ray(float rayangel,int i,t_rend *m)
 	yintercept = floor(m->pplayer->y/16) * 16;
 	if(rayisdown)
 		yintercept += 16;
-	//yintercept += ray_facing(rayangel, ray_down) ? 16 : 0;
 	xintercept =  m->pplayer->x + (yintercept - m->pplayer->y) / tan(rayangel);
 	 /////////////////////////////////////////
 	ystep = 16;
 	if(rayisup)
 		ystep *= -1;
-	//ystep *=ray_facing(rayangel, ray_up) ? -1 : 1;
-	
 	xstep = 16/tan(rayangel);
 	if(rayisleft && xstep > 0)
 		xstep *= -1;
@@ -179,20 +182,89 @@ void cast_ray(float rayangel,int i,t_rend *m)
 	{
 		if (is_wall(m, x_chk, y_chk, '1'))
 		{
-			hitx = x_chk;
-			hity = y_chk;
-			fondwall_hit = TRUE;
-			drawDDA(m->pplayer->x,m->pplayer->y,x_chk,y_chk,m);
+			hhitx = x_chk;
+			hhity = y_chk;
+			findhorzwall_hit = TRUE;
+			//drawDDA(m->pplayer->x,m->pplayer->y,x_chk,y_chk,m);
 			break ;
 		}
 		else
 		{
-			// xintercept += xstep;
-			// yintercept += ystep;
 			x_chk += xstep;
 			y_chk += ystep;
 		}
 	}
+	//////////////////////////////////////////////////
+	////////////////VIRTICAL//////////////////////////
+	//////////////////////////////////////////////////
+	int findvir_wall;
+	float vhitx;
+	float vhity;
+	
+	findvir_wall = FALSE;
+
+	
+	xintercept = floor(m->pplayer->x/16) * 16;
+	if(rayisright)
+		xintercept += 16;
+		
+	yintercept =  m->pplayer->y + (xintercept - m->pplayer->x) * tan(rayangel);
+	 /////////////////////////////////////////
+	xstep = 16;
+	if(rayisleft)
+		xstep *= -1;
+	ystep = 16*tan(rayangel);
+	if(rayisup && ystep > 0)
+		ystep *= -1;
+	if(rayisdown && ystep < 0)
+		ystep *= -1;
+	float	vx_chk;
+	float	vy_chk;
+
+	vx_chk = xintercept;
+	vy_chk = yintercept;
+
+	if(rayisleft)
+		vx_chk--;
+	while (!is_end_window(m, vx_chk, vy_chk))
+	{
+		if (is_wall(m, vx_chk, vy_chk, '1'))
+		{
+			vhitx = vx_chk;
+			vhity = vy_chk;
+			findvir_wall = TRUE;
+			//drawDDA(m->pplayer->x,m->pplayer->y,vx_chk,vy_chk,m);
+			break ;
+		}
+		else
+		{
+			vx_chk += xstep;
+			vy_chk += ystep;
+		}
+	}
+	////////////call distance///////////////////////////////
+	double horz_dist;
+	double vert_dist;
+	if(findhorzwall_hit)
+		horz_dist = distancebetwenpoint(m->pplayer->x,m->pplayer->y,x_chk,y_chk);
+	else
+		horz_dist = INT_MAX;
+	if(findvir_wall)
+		vert_dist = distancebetwenpoint(m->pplayer->x,m->pplayer->y,vx_chk,vy_chk);
+	else
+		vert_dist = INT_MAX;
+	
+	if(horz_dist <= vert_dist)
+	{
+		wallhitx = x_chk;
+		wallhity = y_chk;
+	}
+	else
+	{
+		wallhitx = vx_chk;
+		wallhity = vy_chk;
+	}
+	drawDDA(m->pplayer->x,m->pplayer->y,wallhitx,wallhity,m);
 }
 void rays(t_rend *m)
 {
@@ -202,7 +274,7 @@ void rays(t_rend *m)
 	ra = m->pplayer->rotatangle - (FOV_ANGLE/2);
 	int i;
 	i = 0;
-	while(i < 1)
+	while(i < NUM_RAYS)
 	{
 		cast_ray(ra,i,m);
 		i++;
