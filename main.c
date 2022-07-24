@@ -6,7 +6,7 @@
 /*   By: ooumlil <ooumlil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 21:56:28 by ooumlil           #+#    #+#             */
-/*   Updated: 2022/07/23 23:10:38 by ooumlil          ###   ########.fr       */
+/*   Updated: 2022/07/24 03:25:33 by ooumlil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void player_init(t_rend *m)
 	if(m->player == 'E')
 			m->pplayer->rotatangle = 0;
 	m->pplayer->moveSpeed = 3;
-	m->pplayer->rotationSpeed = 3 * (PI/180);
+	m->pplayer->rotationSpeed = 5 * (PI/180);
 }
 int	main(int ac, char **av)
 {
